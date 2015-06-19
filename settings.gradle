@@ -1,0 +1,2 @@
+rootProject.name = 'grails3-vaadin7-plugin'
+include 'demo', 'plugin'
