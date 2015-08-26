@@ -10,6 +10,8 @@ appender('STDOUT', ConsoleAppender) {
 }
 
 root(ERROR, ['STDOUT'])
+logger('grails.plugins.vaadin', DEBUG)
+logger('org.vaadin.grails', DEBUG)
 
 if(Environment.current == Environment.DEVELOPMENT) {
     def targetDir = BuildSettings.TARGET_DIR

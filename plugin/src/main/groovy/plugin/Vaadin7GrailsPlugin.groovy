@@ -1,8 +1,11 @@
 package plugin
 
-import grails.plugins.*
+import grails.plugins.Plugin
+import grails.plugins.vaadin.server.GrailsAwareVaadinServletRegistrationBean
+import grails.plugins.vaadin.server.OpenSessionInViewFilterRegistrationBean
+import grails.plugins.vaadin.server.DefaultUriMappings
 
-class PluginGrailsPlugin extends Plugin {
+class Vaadin7GrailsPlugin extends Plugin {
 
     // the version or versions of Grails the plugin is designed for
     def grailsVersion = "3.0.1 > *"
@@ -18,6 +21,7 @@ class PluginGrailsPlugin extends Plugin {
     def description = '''\
 Brief summary/description of the plugin.
 '''
+
     def profiles = ['web']
 
     // URL to the plugin's documentation
@@ -42,7 +46,16 @@ Brief summary/description of the plugin.
 
     Closure doWithSpring() { {->
             // TODO Implement runtime spring config (optional)
-        } 
+            xmlns context:"http://www.springframework.org/schema/context"
+//            context.'component-scan'('base-package': "*")
+
+            vaadinServlet(GrailsAwareVaadinServletRegistrationBean)
+
+            if (pluginManager.allPlugins.find { it.name.startsWith('hibernate') }) {
+                openSessionInViewFilter(OpenSessionInViewFilterRegistrationBean)
+            }
+            uriMappings(DefaultUriMappings)
+        }
     }
 
     void doWithDynamicMethods() {

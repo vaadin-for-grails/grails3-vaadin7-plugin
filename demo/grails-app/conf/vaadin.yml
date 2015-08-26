@@ -1,0 +1,11 @@
+vaadin:
+    theme: 'valo'
+    mappings:
+        "/vaadin":
+            ui: 'demo.DemoUI'
+            pageTitle: "Demo 1"
+            fragments:
+                "index":
+                    view: 'demo.WelcomeView'
+                "info":
+                    view: 'demo.InfoView'

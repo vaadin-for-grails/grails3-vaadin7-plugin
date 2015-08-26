@@ -1,6 +1,7 @@
 buildscript {
     ext {
         grailsVersion = project.grailsVersion
+        vaadinVersion = "7.5.0"
     }
     repositories {
         mavenLocal()
@@ -60,10 +61,23 @@ dependencies {
     provided "org.grails:grails-web-boot"
     provided "org.grails:grails-dependencies"
     provided 'javax.servlet:javax.servlet-api:3.1.0'
-
     testCompile "org.grails:grails-plugin-testing"
 
     console "org.grails:grails-console"
+
+    compile 'javax.servlet:jsp-api:2.0'
+    compile "com.vaadin:vaadin-server:${vaadinVersion}"
+    compile "com.vaadin:vaadin-shared:${vaadinVersion}"
+    compile "com.vaadin:vaadin-client-compiled:${vaadinVersion}"
+    compile("com.vaadin:vaadin-client:${vaadinVersion}") {
+        exclude(group: 'javax.validation', module: 'validation-api')
+    }
+    compile("com.vaadin:vaadin-client-compiler:${vaadinVersion}") {
+        exclude(group: 'javax.validation', module: 'validation-api')
+    }
+    compile "com.vaadin:vaadin-themes:${vaadinVersion}"
+    compile "com.vaadin:vaadin-push:${vaadinVersion}"
+    compile 'javax.validation:validation-api:1.1.0.Final'
 }
 
 task wrapper(type: Wrapper) {
