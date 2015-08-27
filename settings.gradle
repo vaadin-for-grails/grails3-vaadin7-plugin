@@ -1,2 +1,2 @@
 rootProject.name = 'grails3-vaadin7-plugin'
-include 'demo', 'plugin'
+include 'vaadin7-demo', 'vaadin7-plugin'
