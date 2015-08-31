@@ -1,6 +1,6 @@
 package grails.plugins.vaadin.config
 
-import grails.plugins.vaadin.server.DefaultUI
+import org.vaadin.grails.ui.DefaultUI
 import groovy.transform.InheritConstructors
 import org.apache.log4j.Logger
 import org.grails.config.PropertySourcesConfig

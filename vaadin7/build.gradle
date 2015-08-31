@@ -1,7 +1,7 @@
 buildscript {
     ext {
         grailsVersion = project.grailsVersion
-        vaadinVersion = "7.5.4"
+        vaadinVersion = "7.5.0"
     }
     repositories {
         mavenLocal()

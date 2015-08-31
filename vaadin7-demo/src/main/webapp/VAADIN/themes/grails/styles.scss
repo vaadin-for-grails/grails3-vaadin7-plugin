@@ -1,0 +1,20 @@
+/*
+ * Colors calculated with http://hslpicker.com
+ */
+$spring-boot-green: hsla(96, 48%, 47%, 1);
+$v-font-color--colored: $spring-boot-green;
+$v-focus-color: $spring-boot-green;
+$v-selection-color: lighten($spring-boot-green, 10%);
+$v-selection-item-selection-color: white;
+$v-friendly-color: hsla(190, 100%, 45%, 1);
+
+@import "../valo/valo";
+
+.grails {
+    @include valo;
+
+    .v-button-primary {
+        color: white;
+        font-weight: normal;
+    }
+}

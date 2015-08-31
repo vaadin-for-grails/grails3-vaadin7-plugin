@@ -1,4 +1,4 @@
-package grails.plugins.vaadin.server
+package org.vaadin.grails.ui
 
 import com.vaadin.server.VaadinRequest
 import com.vaadin.ui.UI

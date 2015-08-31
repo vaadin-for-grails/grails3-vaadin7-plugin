@@ -1,4 +1,4 @@
-package demo
+package demo.ui
 
 import com.vaadin.navigator.View
 import com.vaadin.navigator.ViewChangeListener
@@ -10,6 +10,7 @@ import com.vaadin.ui.HorizontalLayout
 import com.vaadin.ui.Label
 import com.vaadin.ui.VerticalLayout
 import com.vaadin.ui.Window
+import demo.Book
 import org.vaadin.grails.data.fieldgroup.DomainFieldGroup
 import org.vaadin.grails.data.util.DomainItem
 import org.vaadin.grails.data.util.DomainItemContainer
@@ -86,7 +87,7 @@ class BookView extends CustomComponent implements View {
         root.setSpacing(true)
 
         def title = new Label("Books")
-        title.styleName = "h1 colored"
+        title.styleName = "h2 colored"
         root.addComponent(title)
 
         bookGrid = new Grid()

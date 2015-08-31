@@ -27,16 +27,18 @@ class GrailsAwareUIProvider extends UIProvider {
         def uriMappings = UriMappings.getCurrent()
         def uiClass = uriMappings.getUIClass(path)
         if (uiClass == null) {
-            log.warn("No UI class found for path [$path]")
-            return null
+            UIClassFactoryBean uiFactory = ApplicationContextUtils.getSingletonBean("&defaultUIClass")
+            uiClass = uiFactory?.objectType
+            if (uiClass == null) {
+                log.warn("No UI class found for path [$path]")
+                return null
+            }
         }
         uiClass
     }
 
     protected Navigator createNavigator(UI ui) {
-        def navigator = new Navigator(ui, ui)
-        navigator.addProvider(new GrailsAwareViewProvider())
-        navigator
+        new Navigator(ui, ui)
     }
 
     @Override
@@ -50,7 +52,10 @@ class GrailsAwareUIProvider extends UIProvider {
         def uriMappings = UriMappings.getCurrent()
         def fragments = uriMappings.getAllFragments(path)
         if (fragments?.size() > 0) {
-            ui.navigator = createNavigator(ui)
+            if (ui.navigator == null) {
+                ui.navigator = createNavigator(ui)
+            }
+            ui.navigator.addProvider(new GrailsAwareViewProvider())
         }
 
         ui

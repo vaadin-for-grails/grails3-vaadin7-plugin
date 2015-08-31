@@ -1,4 +1,4 @@
-package demo
+package demo.ui
 
 import com.vaadin.navigator.View
 import com.vaadin.navigator.ViewChangeListener
@@ -16,12 +16,16 @@ class WelcomeView extends CustomComponent implements View {
         root.setMargin(true)
 
         def title = new Label("Welcome to Vaadin 7 Plugin for Grails 3.x")
-        title.setStyleName("h1 colored")
+        title.setStyleName("h2 colored")
         root.addComponent(title)
         root.addComponent(new Button("Goto Book Demo", { e ->
             Navigation.navigateTo(BookView)
         } as Button.ClickListener))
 
+        root.addComponent(new Button("1"){{styleName = "friendly"}})
+        root.addComponent(new Button("2"){{styleName = "danger"}})
+        root.addComponent(new Button("3"){{styleName = "primary"}})
+        root.addComponent(new Button("4"){{styleName = "default"}})
         compositionRoot = root
     }
 }

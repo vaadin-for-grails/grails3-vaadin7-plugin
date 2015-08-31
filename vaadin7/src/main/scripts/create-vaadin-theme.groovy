@@ -4,6 +4,6 @@ description("Creates a new Vaadin theme") {
 }
 
 def themeName = args[0]
-render  template: "styles.scss",
-        destination: file( "src/main/resources/VAADIN/themes/$themeName/styles.scss"),
+render  template: "themes/custom/styles.scss.template",
+        destination: file( "src/main/webapp/VAADIN/themes/$themeName/styles.scss"),
         model: [themeName: themeName]

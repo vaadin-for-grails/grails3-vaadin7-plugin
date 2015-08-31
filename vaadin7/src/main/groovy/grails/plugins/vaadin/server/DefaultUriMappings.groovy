@@ -179,8 +179,6 @@ class DefaultUriMappings extends UriMappings {
             def uiClassOrClassName = pathConfig.get('ui')
             if (uiClassOrClassName instanceof String) {
                 uiClass = classLoader.loadClass(uiClassOrClassName)
-            } else {
-                uiClass = (Class) uiClassOrClassName ?: DefaultUI
             }
 
 //            if (uiClass == null) {

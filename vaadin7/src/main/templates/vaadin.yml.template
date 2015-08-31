@@ -1,0 +1,10 @@
+vaadin:
+    theme: 'grails'
+    mappings:
+        '/vaadin':
+#            ui: 'yourpackage.YourUI'
+            pageTitle: 'Vaadin for Grails'
+            fragments:
+                index:
+                    view: '${packageName}.IndexView'
+

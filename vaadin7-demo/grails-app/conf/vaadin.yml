@@ -1,12 +1,12 @@
 vaadin:
-    theme: 'valo'
+    theme: 'grails'
     mappings:
-        "/vaadin":
-#            ui: 'demo.DemoUI'
-            pageTitle: "Demo 1"
+        '/vaadin':
+            ui: 'demo.ui.DemoUI'
+            pageTitle: 'Vaadin for Grails Demo'
             fragments:
-                "index":
-                    view: 'demo.WelcomeView'
-                "book":
-                    view: 'demo.BookView'
+                index:
+                    view: 'demo.ui.WelcomeView'
+                books:
+                    view: 'demo.ui.BookView'
 
