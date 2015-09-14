@@ -12,7 +12,7 @@ def overwrite = flag('force') ? true : false
 String widgetsetFilePath = StringUtils.replace(widgetsetName, ".", "/") + ".gwt.xml"
 
 println widgetsetFilePath
-render  template: "Widgetset.gwt.xml.template",
+render  template: "widgetset.gwt.xml.template",
         destination: file("src/main/groovy/${widgetsetFilePath}"),
         overwrite: overwrite
 
