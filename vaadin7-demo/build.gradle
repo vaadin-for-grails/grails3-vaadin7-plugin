@@ -43,6 +43,7 @@ assets {
 repositories {
     mavenLocal()
     maven { url "https://repo.grails.org/grails/core" }
+    maven { url "http://maven.vaadin.com/vaadin-addons" }
 }
 
 dependencyManagement {
@@ -76,6 +77,8 @@ dependencies {
     console "org.grails:grails-console"
 
     compile project(':vaadin7')
+
+    compile 'org.vaadin.addons:ckeditor-wrapper-for-vaadin:7.10.4'
 }
 
 task wrapper(type: Wrapper) {
@@ -88,3 +91,5 @@ idea {
         outputDir = file("$buildDir/classes/main/")
     }
 }
+
+apply from: 'vaadin.gradle'

@@ -1,0 +1,54 @@
+import org.yaml.snakeyaml.Yaml
+
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'org.yaml:snakeyaml:1.16'
+    }
+}
+
+ext {
+    vaadinConfigFile = file("grails-app/conf/vaadin.yml")
+}
+
+task compileVaadinWidgetsets << {
+    def yaml = new Yaml()
+    def vaadinConfig = yaml.load(new FileInputStream(vaadinConfigFile))
+    vaadinConfig.vaadin.widgetsets.eachWithIndex { widgetset, index ->
+        def task = tasks.create(
+                name: "compileVaadinWidgetset${index}",
+                type: JavaExec) {
+
+
+            classpath {
+                [
+                        sourceSets.main.java.srcDirs,
+                        sourceSets.main.groovy.srcDirs,
+                        sourceSets.main.output.resourcesDir,
+                        sourceSets.main.output.classesDir,
+                        sourceSets.main.compileClasspath,
+                ]
+            }
+
+            maxHeapSize = '1024M'
+            main = 'com.google.gwt.dev.Compiler'
+            jvmArgs = ["-Xss1024k", "-Djava.awt.headless=true"]
+            args = [
+                    widgetset,
+                    '-war', "src/main/webapp/VAADIN/widgetsets",
+                    '-logLevel', 'ALL',
+                    '-localWorkers', '3',
+                    '-draftCompile'
+            ]
+
+        }
+        logger.info("Created task with name {}", task.name)
+        logger.info("Executing task [{}]", task.name)
+        task.execute()
+        tasks.remove(task)
+        logger.info("Removed task [{}]", task.name)
+    }
+}
+

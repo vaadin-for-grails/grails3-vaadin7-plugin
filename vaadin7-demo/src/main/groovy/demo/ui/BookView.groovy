@@ -2,6 +2,7 @@ package demo.ui
 
 import com.vaadin.navigator.View
 import com.vaadin.navigator.ViewChangeListener
+import com.vaadin.server.Sizeable
 import com.vaadin.ui.Button
 import com.vaadin.ui.CustomComponent
 import com.vaadin.ui.FormLayout
@@ -14,6 +15,8 @@ import demo.Book
 import org.vaadin.grails.data.fieldgroup.DomainFieldGroup
 import org.vaadin.grails.data.util.DomainItem
 import org.vaadin.grails.data.util.DomainItemContainer
+import org.vaadin.openesignforms.ckeditor.CKEditorConfig
+import org.vaadin.openesignforms.ckeditor.CKEditorTextField
 
 class BookView extends CustomComponent implements View {
 
@@ -30,6 +33,16 @@ class BookView extends CustomComponent implements View {
             form.addComponent(fieldGroup.buildAndBind('Title', 'title'))
             form.addComponent(fieldGroup.buildAndBind('ISBN', 'isbn'))
             form.addComponent(fieldGroup.buildAndBind('Author', 'author'))
+            def ckcfg = new CKEditorConfig()
+            ckcfg.disableResizeEditor()
+            ckcfg.disableElementsPath()
+            ckcfg.disableSpellChecker()
+            ckcfg.toolbarCanCollapse = true
+            ckcfg.toolbarStartupExpanded = false
+            def ck = new CKEditorTextField(ckcfg)
+            ck.setSizeFull()
+            fieldGroup.bind(ck, 'description')
+            form.addComponent(ck)
 
             def saveButton = new Button("Save", new Button.ClickListener() {
                 @Override
@@ -67,8 +80,9 @@ class BookView extends CustomComponent implements View {
             def ui = com.vaadin.ui.UI.current
             if (!ui.windows.contains(this)) {
                 ui.addWindow(this)
-                center()
+
             }
+            center()
         }
 
         void open() {

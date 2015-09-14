@@ -1,8 +1,11 @@
 vaadin:
+    widgetsets:
+        - 'demo.DemoWidgetset'
     theme: 'grails'
     mappings:
         '/vaadin':
             ui: 'demo.ui.DemoUI'
+            widgetset: 'demo.DemoWidgetset'
             pageTitle: 'Vaadin for Grails Demo'
             fragments:
                 index:

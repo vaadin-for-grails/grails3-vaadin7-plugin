@@ -34,3 +34,7 @@ render  template: "View.groovy.template",
         destination: file("src/main/groovy/$viewGroovyFile"),
         model: [packageName: packageName],
         overwrite: overwrite
+
+render  template: "vaadin.gradle.template",
+        destination: file("vaadin.gradle"),
+        overwrite: true

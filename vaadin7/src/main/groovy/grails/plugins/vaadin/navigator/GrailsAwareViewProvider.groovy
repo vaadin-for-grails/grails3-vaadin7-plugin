@@ -9,6 +9,9 @@ import org.vaadin.grails.server.UriMappings
 import org.vaadin.grails.server.util.UriMappingUtils
 import org.vaadin.grails.util.ApplicationContextUtils
 
+/**
+ *
+ */
 class GrailsAwareViewProvider implements ViewProvider {
 
     private static final Logger log = Logger.getLogger(GrailsAwareViewProvider)

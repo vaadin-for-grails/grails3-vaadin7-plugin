@@ -16,6 +16,7 @@ class DemoUI extends UI {
         def title = new Label("Demo Application")
         title.styleName = "h1 colored"
         content.addComponent(title)
+
         def viewContainer = new Panel()
         navigator = new Navigator(this, viewContainer)
         content.addComponent(viewContainer)

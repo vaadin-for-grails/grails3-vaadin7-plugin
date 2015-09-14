@@ -68,6 +68,8 @@ class DomainFieldGroupFieldFactory implements FieldGroupFieldFactory {
                 int max = (int) constrainedProperty?.max ?: Integer.MAX_VALUE
                 int resolution = constrainedProperty?.scale ?: 0
                 field = fieldType.newInstance(min, max, resolution)
+            } else {
+                field = fieldType.newInstance()
             }
 
         }

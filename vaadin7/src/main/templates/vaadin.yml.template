@@ -1,4 +1,6 @@
 vaadin:
+#    widgetsets:
+#        - 'yourpackage.YourWidgetset'
     theme: 'grails'
     mappings:
         '/vaadin':

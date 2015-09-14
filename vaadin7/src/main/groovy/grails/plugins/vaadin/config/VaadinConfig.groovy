@@ -8,6 +8,9 @@ import org.grails.core.io.ResourceLocator
 import org.grails.gsp.io.GroovyPageStaticResourceLocator
 import org.springframework.beans.factory.config.YamlMapFactoryBean
 
+/**
+ *
+ */
 @InheritConstructors
 class VaadinConfig extends PropertySourcesConfig {
 

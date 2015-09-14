@@ -1,0 +1,27 @@
+Checking for updates
+   First launch was 148cc315ff7
+   Last ping was Mon Aug 31 14:30:04 CEST 2015, min wait is 86400000ms
+Loading inherited module 'de.dehn.Widgetset'
+   Module location: file:/Users/grs/Documents/Grails3%20Projekte/grails3-vaadin7-plugin/vaadin7/src/main/java/de/dehn/Widgetset.gwt.xml
+   Loading inherited module 'com.google.gwt.core.Core'
+      Module location: jar:file:/Users/grs/Documents/Grails3%20Projekte/grails3-vaadin7-plugin/vaadin7/work/vaadin-all-7.5.4/vaadin-client-7.5.4.jar!/com/google/gwt/core/Core.gwt.xml
+      Loading inherited module 'com.google.gwt.dev.jjs.intrinsic.Intrinsic'
+         Module location: jar:file:/Users/grs/Documents/Grails3%20Projekte/grails3-vaadin7-plugin/vaadin7/work/vaadin-all-7.5.4/vaadin-client-compiler-7.5.4.jar!/com/google/gwt/dev/jjs/intrinsic/Intrinsic.gwt.xml
+         Loading inherited module 'com.google.gwt.lang.LongLib'
+            Module location: jar:file:/Users/grs/Documents/Grails3%20Projekte/grails3-vaadin7-plugin/vaadin7/work/vaadin-all-7.5.4/vaadin-client-compiler-7.5.4.jar!/com/google/gwt/lang/LongLib.gwt.xml
+      Loading inherited module 'com.google.gwt.core.CompilerParameters'
+         Module location: jar:file:/Users/grs/Documents/Grails3%20Projekte/grails3-vaadin7-plugin/vaadin7/work/vaadin-all-7.5.4/vaadin-client-7.5.4.jar!/com/google/gwt/core/CompilerParameters.gwt.xml
+      Loading inherited module 'com.google.gwt.emul.Emulation'
+         Module location: jar:file:/Users/grs/Documents/Grails3%20Projekte/grails3-vaadin7-plugin/vaadin7/work/vaadin-all-7.5.4/vaadin-client-7.5.4.jar!/com/google/gwt/emul/Emulation.gwt.xml
+         Loading inherited module 'com.google.gwt.logging.LogImpl'
+            Module location: jar:file:/Users/grs/Documents/Grails3%20Projekte/grails3-vaadin7-plugin/vaadin7/work/vaadin-all-7.5.4/vaadin-client-7.5.4.jar!/com/google/gwt/logging/LogImpl.gwt.xml
+      Loading inherited module 'com.google.gwt.core.StackTrace'
+         Module location: jar:file:/Users/grs/Documents/Grails3%20Projekte/grails3-vaadin7-plugin/vaadin7/work/vaadin-all-7.5.4/vaadin-client-7.5.4.jar!/com/google/gwt/core/StackTrace.gwt.xml
+      Loading inherited module 'com.google.gwt.core.AsyncFragmentLoader'
+         Module location: jar:file:/Users/grs/Documents/Grails3%20Projekte/grails3-vaadin7-plugin/vaadin7/work/vaadin-all-7.5.4/vaadin-client-7.5.4.jar!/com/google/gwt/core/AsyncFragmentLoader.gwt.xml
+      Loading inherited module 'com.google.gwt.core.XSLinker'
+         Module location: jar:file:/Users/grs/Documents/Grails3%20Projekte/grails3-vaadin7-plugin/vaadin7/work/vaadin-all-7.5.4/vaadin-client-7.5.4.jar!/com/google/gwt/core/XSLinker.gwt.xml
+      Loading inherited module 'com.google.gwt.core.CrossSiteIframeLinker'
+         Module location: jar:file:/Users/grs/Documents/Grails3%20Projekte/grails3-vaadin7-plugin/vaadin7/work/vaadin-all-7.5.4/vaadin-client-7.5.4.jar!/com/google/gwt/core/CrossSiteIframeLinker.gwt.xml
+   Loading inherited module 'org.vaadin.openesignforms.ckeditor.widgetset.VaadinCKEditorWidgetset'
+      [ERROR] Unable to find 'org/vaadin/openesignforms/ckeditor/widgetset/VaadinCKEditorWidgetset.gwt.xml' on your classpath; could be a typo, or maybe you forgot to include a classpath entry for source?

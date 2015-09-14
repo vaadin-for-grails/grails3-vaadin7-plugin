@@ -1,9 +1,9 @@
 package grails.plugins.vaadin
 
 import grails.plugins.Plugin
+import grails.plugins.vaadin.server.DefaultUriMappings
 import grails.plugins.vaadin.server.GrailsAwareVaadinServletRegistrationBean
 import grails.plugins.vaadin.server.OpenSessionInViewFilterRegistrationBean
-import grails.plugins.vaadin.server.DefaultUriMappings
 import grails.plugins.vaadin.server.UIClassFactoryBean
 
 class Vaadin7GrailsPlugin extends Plugin {
