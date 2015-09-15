@@ -1,5 +1,4 @@
 # Vaadin 7 plugin for Grails 3.x
-***Build Vaadin Applications on top of Grails in record time!***
 
 The Vaadin 7 plugin integrates the [Vaadin Framework](https://vaadin.com/home) into Grails in an easy way.
 
