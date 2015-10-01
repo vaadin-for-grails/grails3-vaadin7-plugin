@@ -1,4 +1,6 @@
 vaadin:
+    autoComponentScan: true
+    closeIdleSessions: true
 #    widgetsets:
 #        - 'yourpackage.YourWidgetset'
     theme: 'grails'

@@ -3,6 +3,7 @@ package org.vaadin.grails.util
 import com.vaadin.server.VaadinSession
 import com.vaadin.ui.UI
 import grails.util.Holders
+import org.apache.commons.lang.StringUtils
 import org.springframework.beans.BeanInstantiationException
 import org.springframework.beans.factory.NoUniqueBeanDefinitionException
 import org.springframework.context.ApplicationContext
@@ -89,6 +90,7 @@ class ApplicationContextUtils {
      * @throws NoUniqueBeanDefinitionException
      */
     static String getUniqueBeanNameForType(Class<?> type) throws NoUniqueBeanDefinitionException {
+//        def preferredBeanName = GrailsNameUtils.getPropertyNameRepresentation(type)
         def beanNames = applicationContext.getBeanNamesForType(type)
         if (beanNames.size() > 1) {
             throw new NoUniqueBeanDefinitionException(type, beanNames)
@@ -107,13 +109,26 @@ class ApplicationContextUtils {
      * @throws NoUniqueBeanDefinitionException
      */
     static def <T> T getBeanOrInstance(Class<T> type, Class<? extends T> fallbackType, Object... args) throws BeanInstantiationException, NoUniqueBeanDefinitionException {
+        getBeanOrInstance(getUniqueBeanNameForType(type), fallbackType, args)
+    }
+
+    /**
+     * Get the bean for the specified name, or a new instance of the specified fallback type if no bean is available.
+     *
+     * @param name
+     * @param fallbackType
+     * @param args
+     * @return The bean for the specified type, or a new instance of the specified fallback type if no bean is available
+     * @throws BeanInstantiationException
+     * @throws NoUniqueBeanDefinitionException
+     */
+    static def <T> T getBeanOrInstance(String name, Class<? extends T> fallbackType, Object... args) throws BeanInstantiationException, NoUniqueBeanDefinitionException {
         T instance
-        def beanName = getUniqueBeanNameForType(type)
-        if (beanName) {
+        if (StringUtils.isNotEmpty(name) && applicationContext.containsBean(name)) {
             if (args?.length > 0) {
-                instance = applicationContext.getBean(beanName, args)
+                instance = applicationContext.getBean(name, args)
             } else {
-                instance = applicationContext.getBean(beanName)
+                instance = applicationContext.getBean(name)
             }
         } else {
             instance = fallbackType.newInstance(args as Object[])

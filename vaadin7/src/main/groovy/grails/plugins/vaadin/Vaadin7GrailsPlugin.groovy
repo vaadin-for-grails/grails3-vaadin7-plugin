@@ -1,12 +1,18 @@
 package grails.plugins.vaadin
 
 import grails.plugins.Plugin
+import grails.plugins.vaadin.config.VaadinConfig
 import grails.plugins.vaadin.server.DefaultUriMappings
 import grails.plugins.vaadin.server.GrailsAwareVaadinServletRegistrationBean
 import grails.plugins.vaadin.server.OpenSessionInViewFilterRegistrationBean
-import grails.plugins.vaadin.server.UIClassFactoryBean
+import grails.plugins.vaadin.spring.UIScope
+import grails.plugins.vaadin.spring.VaadinSessionScope
+import grails.plugins.vaadin.spring.beans.DefaultUIClassFactory
+import org.apache.log4j.Logger
 
 class Vaadin7GrailsPlugin extends Plugin {
+
+    private static final Logger log = Logger.getLogger(Vaadin7GrailsPlugin)
 
     // the version or versions of Grails the plugin is designed for
     def grailsVersion = "3.0.1 > *"
@@ -46,16 +52,23 @@ Brief summary/description of the plugin.
 //    def scm = [ url: "http://svn.codehaus.org/grails-plugins/" ]
 
     Closure doWithSpring() { {->
-            // TODO Implement runtime spring config (optional)
-            xmlns context:"http://www.springframework.org/schema/context"
-//            context.'component-scan'('base-package': "*")
+            def config = VaadinConfig.getCurrent()
+            if (config.vaadin.autoComponentScan) {
+                def mappedClasses = config.getMappedClasses()
+                def packageNamesToBeScanned = mappedClasses.collect { it.package }.groupBy { it.name }.keySet()
+                log.debug("Automatic component scanning for packages $packageNamesToBeScanned")
+                xmlns context: "http://www.springframework.org/schema/context"
+                context.'component-scan'('base-package': packageNamesToBeScanned.join(','))
+            }
+
+            vaadinSessionScope(VaadinSessionScope)
+            uiScope(UIScope)
 
             vaadinServlet(GrailsAwareVaadinServletRegistrationBean)
-
             if (pluginManager.allPlugins.find { it.name.startsWith('hibernate') }) {
                 openSessionInViewFilter(OpenSessionInViewFilterRegistrationBean)
             }
-            defaultUIClass(UIClassFactoryBean)
+            defaultUIClass(DefaultUIClassFactory)
             uriMappings(DefaultUriMappings)
         }
     }

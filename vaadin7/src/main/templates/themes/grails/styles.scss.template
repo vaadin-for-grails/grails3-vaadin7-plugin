@@ -5,7 +5,7 @@
 \$v-font-color--colored: \$spring-boot-green;
 \$v-focus-color: \$spring-boot-green;
 \$v-selection-color: lighten(\$spring-boot-green, 10%);
-\$v-selection-item-selection-color: white;
+\$v-selection-item-selection-color: #fff;
 \$v-friendly-color: hsla(190, 100%, 45%, 1);
 
 @import "../valo/valo";

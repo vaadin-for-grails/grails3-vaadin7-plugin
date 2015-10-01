@@ -8,8 +8,10 @@ import com.vaadin.server.UIProvider
 import com.vaadin.shared.communication.PushMode
 import com.vaadin.shared.ui.ui.Transport
 import com.vaadin.ui.UI
+import com.vaadin.util.CurrentInstance
 import grails.plugins.vaadin.config.VaadinConfig
 import grails.plugins.vaadin.navigator.GrailsAwareViewProvider
+import grails.plugins.vaadin.spring.beans.DefaultUIClassFactory
 import org.apache.log4j.Logger
 import org.springframework.web.util.UrlPathHelper
 import org.vaadin.grails.server.UriMappings
@@ -27,7 +29,7 @@ class GrailsAwareUIProvider extends UIProvider {
         def uriMappings = UriMappings.getCurrent()
         def uiClass = uriMappings.getUIClass(path)
         if (uiClass == null) {
-            UIClassFactoryBean uiFactory = ApplicationContextUtils.getSingletonBean("&defaultUIClass")
+            DefaultUIClassFactory uiFactory = ApplicationContextUtils.getSingletonBean("&defaultUIClass")
             uiClass = uiFactory?.objectType
             if (uiClass == null) {
                 log.warn("No UI class found for path [$path]")
@@ -43,22 +45,24 @@ class GrailsAwareUIProvider extends UIProvider {
 
     @Override
     UI createInstance(UICreateEvent event) {
-//        UIIdHolder.setCurrent(event.uiId)
-
-        def uiClass = event.getUIClass()
-        def ui = ApplicationContextUtils.getBeanOrInstance(uiClass)
-
-        def path = pathHelper.getPathWithinApplication(event.request)
-        def uriMappings = UriMappings.getCurrent()
-        def fragments = uriMappings.getAllFragments(path)
-        if (fragments?.size() > 0) {
-            if (ui.navigator == null) {
-                ui.navigator = createNavigator(ui)
+        log.debug("Create ui instance for id [${event.uiId}]")
+        CurrentInstance.set(UIID, new UIID(event))
+        try {
+            def uiClass = event.getUIClass()
+            UI ui = ApplicationContextUtils.getBeanOrInstance(uiClass)
+            def path = pathHelper.getPathWithinApplication(event.request)
+            def uriMappings = UriMappings.getCurrent()
+            def fragments = uriMappings.getAllFragments(path)
+            if (fragments?.size() > 0) {
+                if (ui.navigator == null) {
+                    ui.navigator = createNavigator(ui)
+                }
+                ui.navigator.addProvider(new GrailsAwareViewProvider())
             }
-            ui.navigator.addProvider(new GrailsAwareViewProvider())
+            ui
+        } finally {
+            CurrentInstance.set(UIID, null)
         }
-
-        ui
     }
 
     @Override

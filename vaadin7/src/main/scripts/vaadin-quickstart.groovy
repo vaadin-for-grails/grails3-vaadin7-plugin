@@ -38,3 +38,14 @@ render  template: "View.groovy.template",
 render  template: "vaadin.gradle.template",
         destination: file("vaadin.gradle"),
         overwrite: true
+
+def buildScriptFile = file("build.gradle") as File
+def applyFromFound = buildScriptFile.text.find(/apply\sfrom[:]\s[']vaadin\.gradle[']/)
+if (!applyFromFound) {
+    def writer = buildScriptFile.newWriter(true)
+    try {
+        writer.append("\napply from: 'vaadin.gradle'\n")
+    } finally {
+        writer.close()
+    }
+}

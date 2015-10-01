@@ -1,5 +1,7 @@
 package grails.plugins.vaadin.server
 
+import grails.plugins.vaadin.config.VaadinConfig
+import grails.util.Environment
 import org.apache.log4j.Logger
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.context.embedded.ServletRegistrationBean
@@ -29,7 +31,13 @@ class GrailsAwareVaadinServletRegistrationBean extends ServletRegistrationBean {
                 log.debug("URL mapping [$urlMapping] added")
             }
 
+            def config = VaadinConfig.getCurrent()
+            def closeIdleSessions = config.getProperty('vaadin.closeIdleSessions', 'false')
+            def productionMode = Boolean.toString(Environment.current != Environment.DEVELOPMENT)
             addInitParameter('UIProvider', GrailsAwareUIProvider.name)
+            addInitParameter('closeIdleSessions', closeIdleSessions)
+            addInitParameter('productionMode', productionMode)
+            asyncSupported = true
 
             super.configure(registration)
         } catch (e) {

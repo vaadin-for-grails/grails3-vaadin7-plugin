@@ -91,5 +91,4 @@ idea {
         outputDir = file("$buildDir/classes/main/")
     }
 }
-
 apply from: 'vaadin.gradle'
