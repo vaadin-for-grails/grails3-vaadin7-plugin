@@ -2,8 +2,6 @@ package demo.ui
 
 import com.vaadin.navigator.View
 import com.vaadin.navigator.ViewChangeListener
-import com.vaadin.server.Page
-import com.vaadin.server.VaadinSession
 import com.vaadin.ui.*
 import grails.plugins.vaadin.server.UIAttributes
 import org.springframework.context.annotation.Scope
@@ -25,13 +23,13 @@ class WelcomeView extends CustomComponent implements View {
     void init() {
         def root = new VerticalLayout()
         root.setMargin(true)
+        root.setSpacing(true)
 
         Label title = new Label("Welcome to Vaadin 7 Plugin for Grails 3.x")
         title.setStyleName("h2 colored")
         root.addComponent(title)
         root.addComponent(new Button("Goto Book Demo", { e ->
-            println "OK"
-            getUI().navigator.navigateTo("book/a=1")
+            Navigation.navigateTo(fragment: "book/a=1")
         } as Button.ClickListener))
 
         UIAttributes.current.setAttribute(Integer, 7)
@@ -45,16 +43,10 @@ class WelcomeView extends CustomComponent implements View {
             title.value = textField.value
         })
         root.addComponent(changeTitleButton)
-
-        root.addComponent(new Button("Show current fragment", new Button.ClickListener() {
+        root.addComponent(new Button("Show params", new Button.ClickListener() {
             @Override
             void buttonClick(Button.ClickEvent e) {
-//                VaadinSession.getCurrent().close()
-                def text = "Current fragment: " +
-                        Navigation.currentFragment +
-                        "\n current params: " +
-                        Navigation.currentParams
-                Notification.show(text)
+                Notification.show(Navigation.currentParams.toString())
             }
         }))
 

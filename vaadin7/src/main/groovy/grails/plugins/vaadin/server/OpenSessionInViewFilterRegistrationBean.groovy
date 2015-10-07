@@ -2,7 +2,9 @@ package grails.plugins.vaadin.server
 
 import grails.util.Holders
 import org.apache.log4j.Logger
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.context.embedded.FilterRegistrationBean
+import org.vaadin.grails.navigator.UriMappings
 
 import javax.servlet.DispatcherType
 import javax.servlet.FilterRegistration
@@ -18,6 +20,9 @@ import javax.servlet.ServletException
 class OpenSessionInViewFilterRegistrationBean extends FilterRegistrationBean {
 
     private static final Logger log = Logger.getLogger(OpenSessionInViewFilterRegistrationBean)
+
+    @Autowired
+    UriMappings uriMappings
 
     @Override
     void onStartup(ServletContext servletContext) throws ServletException {
@@ -37,7 +42,19 @@ class OpenSessionInViewFilterRegistrationBean extends FilterRegistrationBean {
         log.debug("Configuring OSIV filter")
         try {
             def dt = EnumSet.of(DispatcherType.REQUEST)
-            registration.addMappingForUrlPatterns(dt, true, '/vaadin/*')
+            def listOfPaths = uriMappings.allPathPatterns.findAll { !uriMappings.isPattern(it) }
+            if (!listOfPaths.isEmpty()) {
+                listOfPaths.each { path ->
+                    if (!path.endsWith('/')) {
+                        path += '/'
+                    }
+                    registration.addMappingForUrlPatterns(dt, true, "$path*")
+                    log.debug("mapping for URL pattern [$path*] added")
+                }
+            } else {
+                registration.addMappingForUrlPatterns(dt, true, '/*')
+            }
+//            registration.addMappingForUrlPatterns(dt, true, '/vaadin/*')
             super.configure(registration)
         } catch (e) {
             log.error("Configuring OSIV filter failed", e)

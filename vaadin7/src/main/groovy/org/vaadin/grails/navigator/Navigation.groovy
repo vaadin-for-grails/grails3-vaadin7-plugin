@@ -19,6 +19,15 @@ import javax.servlet.http.HttpServletRequest
 class Navigation {
 
     /**
+     * Get the {@link UriMappings} instance.
+     *
+     * @return the {@link UriMappings} instance
+     */
+    static UriMappings getUriMappings() {
+        ApplicationContextUtils.applicationContext.getBean(UriMappings)
+    }
+
+    /**
      * Get the current path.
      *
      * @return The current path
@@ -31,9 +40,9 @@ class Navigation {
     }
 
     /**
-     * Get the current mapped fragment.
+     * Get the current fragment.
      *
-     * @return The current mapped fragment
+     * @return The current fragment
      */
     static String getCurrentFragment() {
         def uri = Page.current.location
@@ -42,9 +51,9 @@ class Navigation {
     }
 
     /**
-     * Get the current parameters as a map.
+     * Get the current parameters.
      *
-     * @return The current parameters as a map
+     * @return The current parameters
      */
     static Map getCurrentParams() {
         uriMappings.lookupParams(currentPath, currentFragment)
@@ -81,14 +90,5 @@ class Navigation {
         def path = args.get('path') as String
         def fragment = args.get('fragment') as String
         navigateTo(path, fragment)
-    }
-
-    /**
-     * Get the {@link UriMappings} instance.
-     *
-     * @return the {@link UriMappings} instance
-     */
-    static UriMappings getUriMappings() {
-        ApplicationContextUtils.applicationContext.getBean(UriMappings)
     }
 }
