@@ -1,15 +1,16 @@
-vaadin:
-    autoComponentScan: true
-#    widgetsets:
-#        - 'demo.DemoWidgetset'
-    theme: 'grails'
-    mappings:
-        '/vaadin':
-            ui: 'demo.ui.DemoUI'
-#            widgetset: 'demo.DemoWidgetset'
-            pageTitle: 'Vaadin for Grails Demo'
-            fragments:
-                index:
-                    view: 'demo.ui.WelcomeView'
-                books:
-                    view: 'demo.ui.BookView'
+autoComponentScan: true
+
+mappings:
+
+- uri: '/vaadin'
+  theme: 'grails'
+  pageTitle: 'Vaadin for Grails'
+  widgetset: 'demo.DemoWidgetset'
+  view: 'demo.ui.WelcomeView'
+
+- uri: '/vaadin#!welcome/{name}'
+  view: 'demo.ui.WelcomeView'
+
+- uri: '/vaadin#!book/{number}'
+  view: 'demo.ui.BookView'
+

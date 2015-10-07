@@ -17,7 +17,8 @@ ext {
 
 task compileVaadinWidgetsets << {
     println "Compiling vaadin widgetsets"
-    vaadinConfig.vaadin.widgetsets.eachWithIndex { widgetset, index ->
+    vaadinConfig.mappings.findAll { it.containsKey('widgetset') }.eachWithIndex { mapping, index ->
+        def widgetset = mapping['widgetset']
         def task = tasks.create(
                 name: "compileVaadinWidgetset\${index}",
                 type: JavaExec) {

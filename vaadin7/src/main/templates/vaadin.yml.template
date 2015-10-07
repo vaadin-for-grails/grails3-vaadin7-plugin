@@ -1,14 +1,15 @@
-vaadin:
-    autoComponentScan: true
-    closeIdleSessions: true
-#    widgetsets:
-#        - 'yourpackage.YourWidgetset'
-    theme: 'grails'
-    mappings:
-        '/vaadin':
-#            ui: 'yourpackage.YourUI'
-            pageTitle: 'Vaadin for Grails'
-            fragments:
-                index:
-                    view: '${packageName}.IndexView'
+autoComponentScan: true
+closeIdleSessions: true
+
+mappings:
+
+- uri: '/vaadin'
+  theme: 'grails'
+  pageTitle: 'Vaadin for Grails'
+#  ui: '${packageName}.YourUI'
+#  widgetset: '${packageName}.YourWidgetset'
+  view: '${packageName}.IndexView'
+
+#- uri: '/vaadin#!another'
+#  view: '${packageName}.AnotherView'
 

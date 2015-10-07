@@ -6,6 +6,12 @@ import com.vaadin.server.VaadinSession
 import com.vaadin.ui.UI
 import org.apache.log4j.Logger
 
+/**
+ * Storing and retrieving data in UI contexts.
+ *
+ * @author Stephan Grundner
+ * @since 3.0
+ */
 class UIAttributes implements Serializable, SessionDestroyListener {
 
     private static final log = Logger.getLogger(UIAttributes)
@@ -14,9 +20,7 @@ class UIAttributes implements Serializable, SessionDestroyListener {
         "${UIAttributes}#${uiid}"
     }
 
-    static UIAttributes forUI(UI ui) {
-        def uiid = UIID.forUI(ui)
-        def session = ui.session
+    static UIAttributes forUI(VaadinSession session, UIID uiid) {
         def service = session.service
         session.lock()
         try {
@@ -32,6 +36,11 @@ class UIAttributes implements Serializable, SessionDestroyListener {
         }
     }
 
+    static UIAttributes forUI(UI ui) {
+        def uiid = UIID.forUI(ui)
+        forUI(ui.session, uiid)
+    }
+
     static UIAttributes getCurrent() {
         forUI(UI.getCurrent())
     }
@@ -43,18 +52,26 @@ class UIAttributes implements Serializable, SessionDestroyListener {
         this.uiid = uiid
     }
 
+    def <T> T getAttribute(String name) {
+        (T) attributeMap.get(name)
+    }
+
     def <T> T getAttribute(Class<T> type) {
         if (type == null) {
             throw new IllegalArgumentException("type must not be null")
         }
-        (T) attributeMap.get(type.name)
+        getAttribute(type.name)
+    }
+
+    def <T> void setAttribute(String name, T value) {
+        attributeMap.put(name, value)
     }
 
     def <T> void setAttribute(Class<T> type, T value) {
         if (type == null) {
             throw new IllegalArgumentException("type must not be null")
         }
-        attributeMap.put(type.name, value)
+        setAttribute(type.name, value)
     }
 
     boolean belongsToSession(VaadinSession session) {
@@ -67,7 +84,7 @@ class UIAttributes implements Serializable, SessionDestroyListener {
         if (belongsToSession(session)) {
             def sessionId = VaadinSessionID.forSession(session)
             def attributeName = sessionAttributeNameFor(uiid)
-            log.debug("Removing all attributes with key [${attributeName}] from session with id [$sessionId]")
+            log.debug("Removing all attributes with propertyName [${attributeName}] from session with id [$sessionId]")
             attributeMap.clear()
             session.setAttribute(attributeName, null)
         }

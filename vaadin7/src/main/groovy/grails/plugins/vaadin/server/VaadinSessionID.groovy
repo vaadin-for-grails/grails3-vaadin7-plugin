@@ -3,6 +3,12 @@ package grails.plugins.vaadin.server
 import com.vaadin.server.VaadinSession
 import org.apache.log4j.Logger
 
+/**
+ * Identifier for {@link VaadinSession}s.
+ *
+ * @author Stephan Grundner
+ * @since 3.0
+ */
 class VaadinSessionID implements Serializable {
 
     private static final Logger log = Logger.getLogger(VaadinSessionID)
@@ -30,7 +36,6 @@ class VaadinSessionID implements Serializable {
     private VaadinSessionID(String id) {
         assert id != null, "id must not be null"
         this.id = id
-//        log.debug("Created holder for session with id [$id]")
     }
 
     boolean equals(other) {

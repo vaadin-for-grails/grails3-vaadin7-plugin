@@ -5,6 +5,12 @@ import com.vaadin.ui.UI
 import com.vaadin.util.CurrentInstance
 import org.apache.log4j.Logger
 
+/**
+ * Identifier for {@link UI}s.
+ *
+ * @author Stephan Grundner
+ * @since 3.0
+ */
 final class UIID implements Serializable {
 
     private static final Logger log = Logger.getLogger(UIID)
@@ -21,11 +27,19 @@ final class UIID implements Serializable {
                 return uiid
             }
         }
-        throw new RuntimeException("Invalid ui")
+        throw new RuntimeException("No valid ui found")
     }
 
     static UIID getCurrent() {
-        forUI(UI.getCurrent())
+        def ui = UI.getCurrent()
+        if (ui != null) {
+            return forUI(ui)
+        }
+        def uiid = CurrentInstance.get(UIID)
+        if (uiid == null) {
+            throw new RuntimeException("No valid ui found")
+        }
+        uiid
     }
 
     final Integer id
@@ -33,7 +47,6 @@ final class UIID implements Serializable {
     private UIID(Integer id) {
         assert id != null, "id must not be null"
         this.id = id
-//        log.debug("Created holder for ui with id [$id]")
     }
 
     UIID(UICreateEvent event) {

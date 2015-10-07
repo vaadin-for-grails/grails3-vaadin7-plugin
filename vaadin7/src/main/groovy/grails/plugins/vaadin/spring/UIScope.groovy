@@ -6,6 +6,12 @@ import grails.plugins.vaadin.server.UIAttributes
 import grails.plugins.vaadin.server.UIID
 import org.apache.log4j.Logger
 
+/**
+ * UI scope.
+ *
+ * @author Stephan Grundner
+ * @since 3.0
+ */
 class UIScope extends AbstractScope implements ClientConnector.DetachListener {
 
     private static final log = Logger.getLogger(UIScope)

@@ -5,10 +5,16 @@ import grails.util.Environment
 import org.apache.log4j.Logger
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.context.embedded.ServletRegistrationBean
-import org.vaadin.grails.server.UriMappings
+import org.vaadin.grails.navigator.UriMappings
 
 import javax.servlet.ServletRegistration
 
+/**
+ * Factory bean for {@link GrailsAwareVaadinServlet}.
+ *
+ * @author Stephan Grundner
+ * @since 3.0
+ */
 class GrailsAwareVaadinServletRegistrationBean extends ServletRegistrationBean {
 
     private static final Logger log = Logger.getLogger(GrailsAwareVaadinServletRegistrationBean)
@@ -20,23 +26,40 @@ class GrailsAwareVaadinServletRegistrationBean extends ServletRegistrationBean {
         super(new GrailsAwareVaadinServlet(), ['/VAADIN/*'] as String[])
     }
 
+    protected String getUIProviderClassName() {
+        GrailsAwareUIProvider.name
+    }
+
+    protected boolean isCloseIdleSessions() {
+        def config = VaadinConfig.getCurrent()
+        config.getProperty('closeIdleSessions', Boolean, false)
+    }
+
+    protected boolean isProductionMode() {
+        Environment.current != Environment.DEVELOPMENT
+    }
+
     @Override
     protected void configure(ServletRegistration.Dynamic registration) {
         log.debug("Configuring Vaadin servlet")
         try {
-//            Notice: You cannot use UriMappings.getCurrent() here
-            uriMappings.allPaths.each { path ->
-                def urlMapping = "$path/*"
-                addUrlMappings(urlMapping)
-                log.debug("URL mapping [$urlMapping] added")
+            def listOfPaths = uriMappings.allPathPatterns.findAll { !uriMappings.isPattern(it) }
+            if (!listOfPaths.isEmpty()) {
+                listOfPaths.each { path ->
+                    if (!path.endsWith('/')) {
+                        path += '/'
+                    }
+                    addUrlMappings("$path*")
+                    log.debug("URL mapping [$path*] added")
+                }
+            } else {
+                addUrlMappings('/*')
+                log.warn("Vaadin servlet mapped to [/*]")
             }
 
-            def config = VaadinConfig.getCurrent()
-            def closeIdleSessions = config.getProperty('vaadin.closeIdleSessions', 'false')
-            def productionMode = Boolean.toString(Environment.current != Environment.DEVELOPMENT)
-            addInitParameter('UIProvider', GrailsAwareUIProvider.name)
-            addInitParameter('closeIdleSessions', closeIdleSessions)
-            addInitParameter('productionMode', productionMode)
+            addInitParameter('UIProvider', getUIProviderClassName())
+            addInitParameter('closeIdleSessions', Boolean.toString(isCloseIdleSessions()))
+            addInitParameter('productionMode', Boolean.toString(isProductionMode()))
             asyncSupported = true
 
             super.configure(registration)

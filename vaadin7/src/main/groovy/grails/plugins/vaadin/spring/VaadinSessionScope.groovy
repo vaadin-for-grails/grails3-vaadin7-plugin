@@ -7,6 +7,12 @@ import com.vaadin.server.VaadinSession
 import grails.plugins.vaadin.server.VaadinSessionID
 import org.apache.log4j.Logger
 
+/**
+ * Vaadin session scope.
+ *
+ * @author Stephan Grundner
+ * @since 3.0
+ */
 class VaadinSessionScope extends AbstractScope implements SessionDestroyListener {
 
     private static final log = Logger.getLogger(VaadinSessionScope)

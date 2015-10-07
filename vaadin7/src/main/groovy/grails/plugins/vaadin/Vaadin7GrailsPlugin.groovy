@@ -2,12 +2,12 @@ package grails.plugins.vaadin
 
 import grails.plugins.Plugin
 import grails.plugins.vaadin.config.VaadinConfig
-import grails.plugins.vaadin.server.DefaultUriMappings
+import grails.plugins.vaadin.navigator.DefaultUriMappings
 import grails.plugins.vaadin.server.GrailsAwareVaadinServletRegistrationBean
 import grails.plugins.vaadin.server.OpenSessionInViewFilterRegistrationBean
 import grails.plugins.vaadin.spring.UIScope
 import grails.plugins.vaadin.spring.VaadinSessionScope
-import grails.plugins.vaadin.spring.beans.DefaultUIClassFactory
+import grails.plugins.vaadin.spring.beans.UIClassFactory
 import org.apache.log4j.Logger
 
 class Vaadin7GrailsPlugin extends Plugin {
@@ -53,8 +53,8 @@ Brief summary/description of the plugin.
 
     Closure doWithSpring() { {->
             def config = VaadinConfig.getCurrent()
-            if (config.vaadin.autoComponentScan) {
-                def mappedClasses = config.getMappedClasses()
+            if (config.autoComponentScan) {
+                def mappedClasses = config.lookupMappedClasses(grailsApplication)
                 def packageNamesToBeScanned = mappedClasses.collect { it.package }.groupBy { it.name }.keySet()
                 log.debug("Automatic component scanning for packages $packageNamesToBeScanned")
                 xmlns context: "http://www.springframework.org/schema/context"
@@ -68,7 +68,7 @@ Brief summary/description of the plugin.
             if (pluginManager.allPlugins.find { it.name.startsWith('hibernate') }) {
                 openSessionInViewFilter(OpenSessionInViewFilterRegistrationBean)
             }
-            defaultUIClass(DefaultUIClassFactory)
+            uiClass(UIClassFactory)
             uriMappings(DefaultUriMappings)
         }
     }

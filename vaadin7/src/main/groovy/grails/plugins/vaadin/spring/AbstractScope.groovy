@@ -8,6 +8,12 @@ import org.springframework.beans.factory.config.Scope
 
 import java.util.concurrent.ConcurrentHashMap
 
+/**
+ * Vaadin aware spring scope.
+ *
+ * @author Stephan Grundner
+ * @since 3.0
+ */
 abstract class AbstractScope implements Scope, BeanFactoryPostProcessor {
 
     static class BeanMap implements Map<String, Object> {

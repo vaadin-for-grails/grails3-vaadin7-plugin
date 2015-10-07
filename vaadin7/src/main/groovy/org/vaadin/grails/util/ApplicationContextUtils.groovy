@@ -31,14 +31,14 @@ class ApplicationContextUtils {
     }
 
     /**
-     * Get the localized message for the specified key.
+     * Get the localized message for the specified propertyName.
      *
-     * @param key The message key
+     * @param key The message propertyName
      * @param defaultMessage The defaultMessage
      * @param args The arguments array or null
      * @param locale The locale or null
      * @param messageSource The message source or null
-     * @return A localized message for the specified key
+     * @return A localized message for the specified propertyName
      */
     static String getMessage(String key, String defaultMessage, Object[] args = null, Locale locale = null, MessageSource messageSource = null) {
         if (messageSource == null) {
@@ -48,13 +48,13 @@ class ApplicationContextUtils {
     }
 
     /**
-     * Get the localized message for the specified key.
+     * Get the localized message for the specified propertyName.
      *
-     * @param key The message key
+     * @param key The message propertyName
      * @param args The arguments array or null
      * @param locale The locale or null
      * @param messageSource The message source or null
-     * @return A localized message for the specified key
+     * @return A localized message for the specified propertyName
      */
     static String getMessage(String key, Object[] args = null, Locale locale = null, MessageSource messageSource = null) {
         if (messageSource == null) {

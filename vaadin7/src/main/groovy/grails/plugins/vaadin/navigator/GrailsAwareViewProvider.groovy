@@ -2,44 +2,41 @@ package grails.plugins.vaadin.navigator
 
 import com.vaadin.navigator.View
 import com.vaadin.navigator.ViewProvider
-import com.vaadin.server.VaadinSession
 import org.apache.log4j.Logger
 import org.vaadin.grails.navigator.Navigation
-import org.vaadin.grails.server.UriMappings
-import org.vaadin.grails.server.util.UriMappingUtils
 import org.vaadin.grails.util.ApplicationContextUtils
 
 /**
+ * Grails specific implementation for {@link ViewProvider}.
  *
+ * @author Stephan Grundner
+ * @since 1.0
  */
 class GrailsAwareViewProvider implements ViewProvider {
 
     private static final Logger log = Logger.getLogger(GrailsAwareViewProvider)
 
     @Override
-    String getViewName(String fragmentAndParameters) {
+    String getViewName(String fragmentAndParams) {
         def path = Navigation.currentPath
-        def viewName = UriMappingUtils.lookupFragment(path, fragmentAndParameters)
+        def uriMappings = Navigation.uriMappings
+        if (uriMappings.containsFragmentMapping(path, fragmentAndParams)) {
+            return fragmentAndParams
+        }
 
-        viewName
+        log.debug("No fragment found for uri [$path#!$fragmentAndParams]")
+
+        null
     }
 
     @Override
     View getView(String fragment) {
         def path = Navigation.currentPath
-        def uriMappings = UriMappings.getCurrent()
-
-        if (fragment == "") {
-            fragment = uriMappings.getPathProperty(path,
-                    UriMappings.DEFAULT_FRAGMENT_PATH_PROPERTY)
-        }
-
-        def viewClass = uriMappings.getViewClass(path, fragment)
+        def uriMappings = Navigation.uriMappings
+        def viewClass = uriMappings.lookupViewClass(path, fragment)
         if (viewClass) {
-            log.debug("View class [${viewClass?.name}] found for path [${path}] and fragment [${fragment}]")
-            def view = ApplicationContextUtils.getBeanOrInstance(viewClass)
-            VaadinSession.current.setAttribute(View, view)
-            return view
+            log.debug("Creating view for class [${viewClass?.name}] matching path [${path}] and fragment [${fragment}]")
+            return ApplicationContextUtils.getBeanOrInstance(viewClass)
         }
 
         log.debug("No View class found for path [${path}] and fragment [${fragment}]")

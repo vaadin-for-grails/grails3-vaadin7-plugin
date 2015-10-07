@@ -7,7 +7,7 @@ import com.vaadin.server.VaadinSession
 import org.apache.commons.lang.LocaleUtils
 
 /**
- * Grails sepecific implementation for {@link RequestHandler}.
+ * Grails specific implementation for {@link RequestHandler}.
  *
  * @author Stephan Grundner
  * @since 2.0

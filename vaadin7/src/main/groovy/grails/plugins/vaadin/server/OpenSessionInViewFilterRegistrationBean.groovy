@@ -9,6 +9,12 @@ import javax.servlet.FilterRegistration
 import javax.servlet.ServletContext
 import javax.servlet.ServletException
 
+/**
+ * Factory bean for the Hibernate specific OSIV filter.
+ *
+ * @author Stephan Grundner
+ * @since 3.0
+ */
 class OpenSessionInViewFilterRegistrationBean extends FilterRegistrationBean {
 
     private static final Logger log = Logger.getLogger(OpenSessionInViewFilterRegistrationBean)
