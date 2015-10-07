@@ -14,7 +14,7 @@ class Vaadin7GrailsPlugin extends Plugin {
 
     private static final Logger log = Logger.getLogger(Vaadin7GrailsPlugin)
 
-    def version = "3.0.0"
+    def version = "3.0.1"
     def grailsVersion = "3.0.1 > *"
 
     def title = "Vaadin 7 Plugin"
