@@ -109,7 +109,7 @@ class ApplicationContextUtils {
      * @throws NoUniqueBeanDefinitionException
      */
     static def <T> T getBeanOrInstance(Class<T> type, Class<? extends T> fallbackType, Object... args) throws BeanInstantiationException, NoUniqueBeanDefinitionException {
-        getBeanOrInstance(getUniqueBeanNameForType(type), fallbackType, args)
+        getBeanOrInstance(getUniqueBeanNameForType(type) as String, fallbackType, args)
     }
 
     /**
